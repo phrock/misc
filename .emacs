@@ -1,4 +1,14 @@
 (setq frame-title-format "FIGHTING")
+(defun my-maximized ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+)
+(my-maximized)
 (mouse-avoidance-mode 'banish)
 
 (global-set-key "\C-x?" 'help-command)
