@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mplayer -cache 1024 mms://enmms.chinabroadcast.cn/fm91.5
