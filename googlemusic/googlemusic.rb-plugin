@@ -1,0 +1,11 @@
+[RB Plugin]
+Loader=python
+Module=googlemusic
+IAge=1
+Name=googlemusic
+Name[zh_CN]=谷歌音乐
+Description=Google Music for rhythmbox
+Description[zh_CN]=为rhythmbox增加谷歌音乐播放支持
+Authors=kanglog.com \nproming<promingx@gmail.com>
+Copyright=Copyright © 2009 kanglog.com\nCopyright © 2009 proming
+Website=http://www.kanglog.com/ \nhttp://flm.appspot.com

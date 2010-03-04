@@ -1,0 +1,2 @@
+AC_FILE="AC"
+echo $1 >> $AC_FILE
