@@ -1,0 +1,8 @@
+struct cmp
+{
+    bool operator() (const II& a, const II& b) const
+    {
+	if (a.X != b.X) return a.X > b.X;
+	else return a.Y < b.Y;
+    }
+};

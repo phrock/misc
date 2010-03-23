@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mplayer -ao pulse -cache 4096 mms://alive.bjradio.com.cn/fm974
