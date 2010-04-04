@@ -1,0 +1,3 @@
+#name : print two dimension
+# --
+{ cout<<"{"<<endl; for (typeof((${1:stl}).begin()) i = ($1).begin(); i != ($1).end(); ++i) { cout<<" { "; for (typeof((*i).begin()) j = (*i).begin(); j != (*i).end(); j++) cout<<*j<<", "; cout<<"}"; cout<<endl; } cout<<"}"<<endl; }

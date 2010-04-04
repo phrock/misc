@@ -1,0 +1,3 @@
+#name : translate type
+# --
+*({ ostringstream oss; oss << (${1:item}); istringstream iss(oss.str()); static ${2:type} _cast_ret; iss >> _cast_ret; &_cast_ret; })
