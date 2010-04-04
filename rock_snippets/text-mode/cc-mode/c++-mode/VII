@@ -1,0 +1,3 @@
+#name : vector< pair<int, int> >
+# --
+vector< pair<int, int> > $0
