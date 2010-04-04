@@ -1,3 +1,0 @@
-#name : print pair items
-# --
-{ cout<<"{ "; for (typeof((${1:stl}).begin()) i = ($1).begin(); i != ($1).end(); ++i) {cout<<"{"<<i->first<<", "<<i->second<<"}"; cout<<", ";} cout<<" }"<<endl; }

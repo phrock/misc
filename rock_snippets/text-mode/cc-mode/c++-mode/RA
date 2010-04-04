@@ -1,5 +1,0 @@
-#name : for (...; ...; ...) { ... }
-# --
-for (typeof(($2).begin()) ${1:iterator} = (${2:stl}).begin(); $1 != ($2).end(); ++$1) {
-    $0
-}

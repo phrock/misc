@@ -1,3 +1,0 @@
-#name : print items
-# --
-{ cout<<"{ "; for (typeof((${1:stl}).begin()) i = ($1).begin(); i != ($1).end(); ++i) { cout<<*i<<", "; } cout<<"}"<<endl; }
