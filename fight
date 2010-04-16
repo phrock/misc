@@ -1,2 +1,16 @@
-TEMPLATE="./template.cpp"
+#!/bin/bash
+
+TEMPLATE=""
+TEMPLATE_TOPCODER="/home/rock/program/topcoder/template.cpp"
+TEMPLATE_UVA="/home/rock/program/uva/template.cpp"
+
+PWD=`pwd`
+TOPCODER="topcoder"
+
+if [ x"${PWD#*${TOPCODER}*}" = x"$PWD" ]; then
+   TEMPLATE=$TEMPLATE_UVA
+else
+   TEMPLATE=$TEMPLATE_TOPCODER
+fi
+
 mkdir $1 && cp ${TEMPLATE} $1/1.cpp

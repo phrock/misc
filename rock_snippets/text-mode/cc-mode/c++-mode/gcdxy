@@ -1,3 +1,3 @@
 #name : gcd with coefficients template
 # --
-template<class T> inline T gcdxy(T a, T b, T& x, T& y) { x=1; T ta=a; T tb=b; T v=0; while (b != 0) { T r=a%b; T s=x-v*(a/b); x=v; v=s; a=b; b=r; } if (!tb) y=0; else y=(a-ta*x)/tb; while (x <= 0) { x+=tb; y-=ta; } return a; }
+template<class T> inline void gcdxy(T a, T b, T &g, T& x, T& y) { if (!b) { g = a; x = 1; y = 0; } else { gcdxy(b, a%b, g, y, x); y -= x*(a/b); } }
