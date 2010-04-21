@@ -1,3 +1,0 @@
-#name : push_front
-# --
-push_front(${1:item})

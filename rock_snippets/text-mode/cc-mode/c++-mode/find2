@@ -1,3 +1,0 @@
-#name : (find((stl).begin(), stl.end(), x) != (stl).end())
-# --
-(find((${1:stl}).begin(), ($1).end(), ${2:item}) != ($1).end())

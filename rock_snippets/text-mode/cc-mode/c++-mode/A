@@ -1,3 +1,0 @@
-#name : x.begin(), x.end()
-# --
-(${1:stl}).begin(), ($1).end()

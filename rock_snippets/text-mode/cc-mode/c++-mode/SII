@@ -1,3 +1,0 @@
-#name : set< pair<int, int> >
-# --
-set< pair<int, int> > $0
