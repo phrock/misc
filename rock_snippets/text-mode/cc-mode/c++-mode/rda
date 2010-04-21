@@ -1,0 +1,5 @@
+#name : for (...; ...; ...) { ... }
+# --
+for (__typeof(($2).rbegin()) ${1:iterator} = (${2:stl}).rbegin(); $1 != ($2).rend(); ++$1) {
+    $0
+}
