@@ -1,0 +1,4 @@
+#name : set cout precision
+# --
+cout<<setprecision(${1:PRECISION});
+cout<<res<<endl;

@@ -1,0 +1,6 @@
+#name : debug
+#expand-env: ((yas/indent-line 'fixed))
+# --
+#ifdef DEBUG
+$0
+#endif
