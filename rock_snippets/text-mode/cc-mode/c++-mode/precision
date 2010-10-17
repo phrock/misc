@@ -1,4 +1,4 @@
 #name : set cout precision
 # --
+cout.setf(ios_base::fixed);
 cout<<setprecision(${1:PRECISION});
-cout<<res<<endl;
