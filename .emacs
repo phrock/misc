@@ -10,8 +10,8 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key [M-f1] 'next-buffer)
 (global-set-key [M-f2] 'previous-buffer)
-(global-set-key (kbd "C-;") 'other-window)
-(global-set-key (kbd "C-'") 'delete-other-windows)
+(global-set-key (kbd "C-;") 'switch-to-buffer)
+(global-set-key (kbd "C-'") 'other-window)
 
 
 (add-hook 'c-mode-hook 
@@ -23,7 +23,9 @@
 (global-set-key "\M-n" '( lambda() (interactive) (move-to-window-line -1) ) )
 
 ;(setq scroll-conservatively 0) ;;when beyond the last line of the window, do NOT scroll half window lines.
-
+;(show-paren-mode t)
+;(setq show-paren-style 'parentheses) ;; 设置显示括号匹配，但不跳转
+(setq column-number-mode t)
 (setq inhibit-startup-message t) ;;close startup message
 (setq transient-mark-mode t) ;;highlight selected region
 (setq make-backup-files         nil) ; Don't want any backup files
@@ -91,14 +93,14 @@ File suffix is used to determine what program to run."
   (let (extention-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
-	    ("cpp" . "g++ -Wall -o /tmp/a.out")
+	    ("cpp" . "g++ -Wall -o /tmpfs/a.out")
             ;("sh" . "bash")
             )
           )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
-    (setq fileStr "/tmp/a.out")
+    (setq fileStr "/usr/bin/time -f \"***** Time %Us\tMemory %Mk *****\" /tmpfs/a.out")
     (setq cmdStr (concat progName " \""   fname "\"" " && " fileStr))
     (if progName
 	(progn
@@ -111,14 +113,14 @@ File suffix is used to determine what program to run."
   (let (extention-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
-	    ("cpp" . "g++ -DDEBUG -Wall -o /tmp/a.out")
+	    ("cpp" . "g++ -DDEBUG -Wall -o /tmpfs/a.out")
             ;("sh" . "bash")
             )
           )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
-    (setq fileStr "/tmp/a.out")
+    (setq fileStr "/usr/bin/time -f \"***** Time %Us\tMemory %Mk *****\" /tmpfs/a.out")
     (setq cmdStr (concat progName " \""   fname "\"" " && " fileStr))
     (if progName
 	(progn
