@@ -10,8 +10,8 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key [M-f1] 'next-buffer)
 (global-set-key [M-f2] 'previous-buffer)
-(global-set-key (kbd "C-;") 'switch-to-buffer)
-(global-set-key (kbd "C-'") 'other-window)
+(global-set-key (kbd "C-;") 'other-window)
+(global-set-key (kbd "C-'") 'switch-to-buffer)
 
 
 (add-hook 'c-mode-hook 
@@ -131,5 +131,15 @@ File suffix is used to determine what program to run."
 (global-set-key "\M-r" 'compile-and-run-current-file)
 (global-set-key "\C-\M-r" 'compile-and-run-current-file-debug)
 
+(defun my-maximized ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
+(my-maximized)
 (split-window-horizontally)
-(enlarge-window-horizontally 25)
+(enlarge-window-horizontally 30)
