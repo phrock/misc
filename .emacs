@@ -90,18 +90,25 @@ then it'll call “perl x.pl” in a shell.
 The file can be php, perl, python, ruby, javascript, bash, ocaml, java.
 File suffix is used to determine what program to run."
   (interactive)
-  (let (extention-alist fname suffix progName cmdStr)
+  (let (extention-alist fileStr-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -Wall -o /tmpfs/a.out")
+	    ("py"  . "python")
             ;("sh" . "bash")
             )
           )
+    (setq fileStr-alist
+	  '(
+	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("py"  . "")
+	    )
+	  )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
-    (setq fileStr "/usr/bin/time -f \"***** Time %Us\tMemory %Mk *****\" /tmpfs/a.out")
-    (setq cmdStr (concat progName " \""   fname "\"" " && " fileStr))
+    (setq fileStr (cdr (assoc suffix fileStr-alist)))
+    (setq cmdStr (concat progName " \""   fname "\"" fileStr))
     (if progName
 	(progn
 	  (message "Running...")
@@ -110,18 +117,25 @@ File suffix is used to determine what program to run."
       ) ))
 (defun compile-and-run-current-file-debug ()
   (interactive)
-  (let (extention-alist fname suffix progName cmdStr)
+  (let (extention-alist fileStr-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -DDEBUG -Wall -o /tmpfs/a.out")
+	    ("py"  . "python")
             ;("sh" . "bash")
             )
           )
+    (setq fileStr-alist
+	  '(
+	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("py"  . "")
+	    )
+	  )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
-    (setq fileStr "/usr/bin/time -f \"***** Time %Us\tMemory %Mk *****\" /tmpfs/a.out")
-    (setq cmdStr (concat progName " \""   fname "\"" " && " fileStr))
+    (setq fileStr (cdr (assoc suffix fileStr-alist)))
+    (setq cmdStr (concat progName " \""   fname "\"" fileStr))
     (if progName
 	(progn
 	  (message "Running...")
