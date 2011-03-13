@@ -33,8 +33,24 @@
 (setq auto-save-default         nil) ; Don't want any auto saving
 (setq backup-directory-alist '(("." . "~/.emacs.backups"))) ;; the backup files named xxx~ will in the directory: ~/.emacs.backups
 
-;(setq c-basic-offset 4)
-(setq-default indent-tab-mode nil)
+(setq c-basic-offset 4)
+(setq indent-tab-mode nil)
+
+;; for kernel code
+(defun linux-c-mode ()
+  "C mode with adjusted defaults for use with the Linux kernel."
+  (interactive)
+  (c-mode)
+  (c-set-style "K&R")
+  (setq tab-width 8)
+  (setq indent-tabs-mode t)
+  (setq c-basic-offset 8))
+(setq auto-mode-alist (cons '("/home/rock/program/kernel/.*\\.[ch]$" . linux-c-mode)
+			    auto-mode-alist))
+;; (setq auto-mode-alist (cons '("/home/rock/test/.*\\.[ch]$" . linux-c-mode)
+;; 			    auto-mode-alist))
+
+
 
 (tool-bar-mode)
 (menu-bar-mode)
