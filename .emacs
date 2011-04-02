@@ -93,6 +93,14 @@
 (yas/load-directory yas/root-directory)
 (setq yas/triggers-in-field t)
 
+;; for cscope
+(add-to-list 'load-path
+	     "~/.emacs.d/plugins/xcscope")
+(add-hook 'c-mode-common-hook
+	  '(lambda ()
+	     (require 'xcscope)))
+;; (define-key global-map "\C-j" 'cscope-select-entry-other-window)
+
 ;; Replace path below to be where your matlab.el file is.
 ;;(add-to-list 'load-path "~/.emacs.d/plugins/matlab-emacs")
 ;;(load-library "matlab-load")
@@ -110,6 +118,7 @@ File suffix is used to determine what program to run."
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -Wall -o /tmpfs/a.out")
+	    ("c"   . "gcc -Wall -o /tmpfs/a.out")
 	    ("py"  . "python")
             ;("sh" . "bash")
             )
@@ -117,6 +126,7 @@ File suffix is used to determine what program to run."
     (setq fileStr-alist
 	  '(
 	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
 	    ("py"  . "")
 	    )
 	  )
@@ -137,6 +147,7 @@ File suffix is used to determine what program to run."
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -DDEBUG -Wall -o /tmpfs/a.out")
+	    ("c"   . "gcc -DDEBUG -Wall -o /tmpfs/a.out")
 	    ("py"  . "python")
             ;("sh" . "bash")
             )
@@ -144,6 +155,7 @@ File suffix is used to determine what program to run."
     (setq fileStr-alist
 	  '(
 	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
 	    ("py"  . "")
 	    )
 	  )
