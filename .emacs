@@ -34,7 +34,8 @@
 (setq backup-directory-alist '(("." . "~/.emacs.backups"))) ;; the backup files named xxx~ will in the directory: ~/.emacs.backups
 
 (setq c-basic-offset 4)
-(setq indent-tab-mode nil)
+;; (setq indent-tabs-mode nil)无效的原因是indent-tabs-mode是针对buffer的local变量,每当建立buffer时会自动取缺省值.
+(setq-default indent-tabs-mode nil)
 
 ;; for kernel code
 (defun linux-c-mode ()
