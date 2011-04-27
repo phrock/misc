@@ -7,11 +7,12 @@
 (global-set-key "\C-\M-h" 'backward-kill-word)
 (global-set-key [C-left] 'previous-buffer)
 (global-set-key [C-right] 'next-buffer)
-(global-set-key [C-tab] 'other-window)
+;; (global-set-key [C-tab] 'other-window)
 (global-set-key [M-f1] 'next-buffer)
 (global-set-key [M-f2] 'previous-buffer)
 (global-set-key (kbd "C-;") 'other-window)
 (global-set-key (kbd "C-'") 'switch-to-buffer)
+(global-set-key "\M-," '( lambda() (interactive) (backward-delete-char 4))) ; for python indent back
 
 
 (add-hook 'c-mode-hook 
@@ -50,6 +51,24 @@
 			    auto-mode-alist))
 ;; (setq auto-mode-alist (cons '("/home/rock/test/.*\\.[ch]$" . linux-c-mode)
 ;; 			    auto-mode-alist))
+
+;; ***** python *****
+;; (add-to-list 'load-path
+;; 	     "~/.emacs.d/plugins/python")
+;; setup python-mode
+;; (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; (setq interpreter-mode-alist (cons '("python" . python-mode)
+;;                                    interpreter-mode-alist))
+;; (autoload 'python-mode "python-mode" "Python editing mode." t)
+;; ------------------------------------------
+;; setup pymacs
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-exec "pymacs" nil t)
+;; (autoload 'pymacs-load "pymacs" nil t)
+;;(eval-after-load "pymacs"
+;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
 
 
 
@@ -120,7 +139,7 @@ File suffix is used to determine what program to run."
           '(
 	    ("cpp" . "g++ -Wall -o /tmpfs/a.out")
 	    ("c"   . "gcc -Wall -o /tmpfs/a.out")
-	    ("py"  . "python")
+	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
             ;("sh" . "bash")
             )
           )
@@ -149,7 +168,7 @@ File suffix is used to determine what program to run."
           '(
 	    ("cpp" . "g++ -DDEBUG -Wall -o /tmpfs/a.out")
 	    ("c"   . "gcc -DDEBUG -Wall -o /tmpfs/a.out")
-	    ("py"  . "python")
+	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
             ;("sh" . "bash")
             )
           )
@@ -185,4 +204,4 @@ File suffix is used to determine what program to run."
    '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
 (my-maximized)
 (split-window-horizontally)
-(enlarge-window-horizontally 30)
+(enlarge-window-horizontally 20)
