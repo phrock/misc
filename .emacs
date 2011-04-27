@@ -12,7 +12,7 @@
 (global-set-key [M-f2] 'previous-buffer)
 (global-set-key (kbd "C-;") 'other-window)
 (global-set-key (kbd "C-'") 'switch-to-buffer)
-(global-set-key "\M-," '( lambda() (interactive) (backward-delete-char 4))) ; for python indent back
+(global-set-key (kbd "C-,") '( lambda() (interactive) (backward-delete-char 4))) ; for python indent back
 
 
 (add-hook 'c-mode-hook 
