@@ -1,4 +1,3 @@
 #name : set cout precision
 # --
-cout.setf(ios_base::fixed);
-cout<<setprecision(${1:PRECISION});
+cout << setiosflags(ios::fixed) << setprecision(${1:PRECISION});
