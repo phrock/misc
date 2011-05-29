@@ -137,16 +137,16 @@ File suffix is used to determine what program to run."
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
-	    ("cpp" . "g++ -Wall -o /tmpfs/a.out")
-	    ("c"   . "gcc -Wall -o /tmpfs/a.out")
+	    ("cpp" . "g++ -Wall -o /tmp/a.out")
+	    ("c"   . "gcc -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
             ;("sh" . "bash")
             )
           )
     (setq fileStr-alist
 	  '(
-	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
-	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
+	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    ("py"  . "")
 	    )
 	  )
@@ -166,16 +166,16 @@ File suffix is used to determine what program to run."
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
-	    ("cpp" . "g++ -DDEBUG -Wall -o /tmpfs/a.out")
-	    ("c"   . "gcc -DDEBUG -Wall -o /tmpfs/a.out")
+	    ("cpp" . "g++ -DDEBUG -Wall -o /tmp/a.out")
+	    ("c"   . "gcc -DDEBUG -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
             ;("sh" . "bash")
             )
           )
     (setq fileStr-alist
 	  '(
-	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
-	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmpfs/a.out")
+	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
+	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    ("py"  . "")
 	    )
 	  )
@@ -204,4 +204,19 @@ File suffix is used to determine what program to run."
    '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
 (my-maximized)
 (split-window-horizontally)
-(enlarge-window-horizontally 20)
+;; (enlarge-window-horizontally 20)
+
+;; (ansi-term "/bin/bash")
+;; (setq eshell-aliases-file "~/.emacs.d/eshell-conf/alias")
+;; (setenv "PATH" (concat "/home/rock/bin" ":" (getenv "PATH")))
+;; (eshell)
+
+; emms
+;; (add-to-list 'load-path "~/.emacs.d/plugins/emms-3.0/")
+;; (require 'emms-setup)
+;; (emms-standard)
+;; (emms-default-players)
+
+(add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
+(require 'w3m-load)
+(setq w3m-home-page "file:///home/rock/Documents/c++_primer4/html/0201721481/toc.html")
