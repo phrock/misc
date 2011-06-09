@@ -1,0 +1,148 @@
+--- po/en_GB.po	2008-04-28 18:41:42.000000000 +0800
++++ po/en_GB.po	2010-09-15 22:46:21.000000000 +0800
+@@ -7,10 +7,11 @@
+ msgstr ""
+ "Project-Id-Version: tilda\n"
+ "Report-Msgid-Bugs-To: sloutri@iit.edu\n"
+-"POT-Creation-Date: 2008-04-28 05:41-0500\n"
++"POT-Creation-Date: 2010-09-15 22:46+0800\n"
+ "PO-Revision-Date: 2008-01-14 16:23+0000\n"
+ "Last-Translator: John Drinkwater <john@nextraweb.com>\n"
+ "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
++"Language: \n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -33,7 +34,7 @@
+ msgid "Do not show in taskbar"
+ msgstr "Do not show in taskbar"
+ 
+-#: tilda.glade:85 src/tilda.c:303
++#: tilda.glade:85 src/tilda.c:374
+ msgid "Start Tilda hidden"
+ msgstr "Start Tilda hidden"
+ 
+@@ -183,11 +184,11 @@
+ msgid "Centered Vertically"
+ msgstr "Centred Vertically"
+ 
+-#: tilda.glade:869 src/tilda.c:310
++#: tilda.glade:869 src/tilda.c:381
+ msgid "X Position"
+ msgstr "X Position"
+ 
+-#: tilda.glade:882 src/tilda.c:311
++#: tilda.glade:882 src/tilda.c:382
+ msgid "Y Position"
+ msgstr "Y Position"
+ 
+@@ -392,61 +393,61 @@
+ msgid "Unable to write the config file to %s\n"
+ msgstr ""
+ 
+-#: src/tilda.c:214
++#: src/tilda.c:285
+ #, c-format
+ msgid "Unable to run command: `%s'\n"
+ msgstr "Unable to run command: `%s'\n"
+ 
+-#: src/tilda.c:237 src/tilda.c:463
++#: src/tilda.c:308 src/tilda.c:535
+ #, c-format
+ msgid "Unable to open lock directory: %s\n"
+ msgstr "Unable to open lock directory: %s\n"
+ 
+-#: src/tilda.c:300
++#: src/tilda.c:371
+ msgid "Use Antialiased Fonts"
+ msgstr "Use Anti-aliased Fonts"
+ 
+-#: src/tilda.c:301
++#: src/tilda.c:372
+ msgid "Set the background color"
+ msgstr "Set the background colour"
+ 
+-#: src/tilda.c:302
++#: src/tilda.c:373
+ msgid "Run a command at startup"
+ msgstr "Run a command at startup"
+ 
+-#: src/tilda.c:304
++#: src/tilda.c:375
+ msgid "Set the font to the following string"
+ msgstr "Set the font to the following string"
+ 
+-#: src/tilda.c:305
++#: src/tilda.c:376
+ msgid "Scrollback Lines"
+ msgstr "Scroll-back Lines"
+ 
+-#: src/tilda.c:306
++#: src/tilda.c:377
+ msgid "Use Scrollbar"
+ msgstr "Use Scrollbar"
+ 
+-#: src/tilda.c:307
++#: src/tilda.c:378
+ msgid "Opaqueness: 0-100%"
+ msgstr "Opaqueness: 0-100%"
+ 
+-#: src/tilda.c:308
++#: src/tilda.c:379
+ msgid "Print the version, then exit"
+ msgstr "Print the version, then exit"
+ 
+-#: src/tilda.c:309
++#: src/tilda.c:380
+ msgid "Set Initial Working Directory"
+ msgstr "Set Initial Working Directory"
+ 
+-#: src/tilda.c:312
++#: src/tilda.c:383
+ msgid "Set Background Image"
+ msgstr "Set Background Image"
+ 
+-#: src/tilda.c:313
++#: src/tilda.c:384
+ msgid "Show Configuration Wizard"
+ msgstr "Show Configuration Wizard"
+ 
+-#: src/tilda.c:329
++#: src/tilda.c:401
+ #, c-format
+ msgid ""
+ "Error parsing command-line options. Try \"tilda --help\"\n"
+@@ -478,15 +479,15 @@
+ msgid "Unable to launch default shell: %s\n"
+ msgstr ""
+ 
+-#: src/tilda_terminal.c:675
++#: src/tilda_terminal.c:700
+ msgid "_New Tab"
+ msgstr ""
+ 
+-#: src/tilda_terminal.c:679
++#: src/tilda_terminal.c:704
+ msgid "_Close Tab"
+ msgstr ""
+ 
+-#: src/tilda_terminal.c:769
++#: src/tilda_terminal.c:794
+ #, c-format
+ msgid "Failed to launch the web browser. The command was `%s'\n"
+ msgstr ""
+@@ -495,12 +496,12 @@
+ msgid "You have a bad tab_pos in your configuration file\n"
+ msgstr "You have a bad tab_pos in your configuration file\n"
+ 
+-#: src/tilda_window.c:333
++#: src/tilda_window.c:396
+ #, c-format
+ msgid "Unable to set tilda's icon: %s\n"
+ msgstr "Unable to set tilda's icon: %s\n"
+ 
+-#: src/tilda_window.c:480
++#: src/tilda_window.c:543
+ msgid "Out of memory, cannot create tab\n"
+ msgstr "Out of memory, cannot create tab\n"
+ 

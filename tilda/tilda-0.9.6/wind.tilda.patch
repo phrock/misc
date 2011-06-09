@@ -1,0 +1,254 @@
+diff -Nur src/key_grabber.c src.n/key_grabber.c
+--- src/key_grabber.c	2008-04-08 06:12:31.000000000 +0800
++++ src.n/key_grabber.c	2009-11-16 10:13:00.380807447 +0800
+@@ -179,9 +179,12 @@
+     DEBUG_ASSERT (state == PULL_UP || state == PULL_DOWN || state == PULL_TOGGLE);
+ 
+     gint i;
++    GdkWindow* awin;
++	GdkScreen* screen;
+ 
+     if (tw->current_state == UP && state != PULL_UP)
+     {
++        
+         /* Keep things here just like they are. If you use gtk_window_present() here, you
+          * will introduce some weird graphical glitches. Also, calling gtk_window_move()
+          * before showing the window avoids yet more glitches. You should probably not use
+@@ -190,7 +193,7 @@
+          * Overriding the user time here seems to work a lot better than calling
+          * gtk_window_present_with_time() here, or at the end of the function. I have
+          * no idea why, they should do the same thing. */
+-        gdk_x11_window_set_user_time (GTK_WIDGET(tw->window)->window,
++        gdk_x11_window_set_user_time (GTK_WIDGET(tw->window),
+                                       tomboy_keybinder_get_current_event_time());
+         gtk_window_move (GTK_WINDOW(tw->window), config_getint ("x_pos"), config_getint ("y_pos"));
+         gtk_widget_show (GTK_WIDGET(tw->window));
+@@ -226,6 +229,16 @@
+     }
+     else if (state != PULL_DOWN)
+     {
++        screen = gdk_screen_get_default();
++        awin = gdk_screen_get_active_window(screen);
++        if (awin != tw->window->window) {
++            printf ("MOVED UP\n");
++            gtk_window_move (GTK_WINDOW(tw->window), config_getint ("x_pos"), config_getint ("y_pos"));
++            gtk_widget_show (GTK_WIDGET(tw->window));
++            tilda_window_set_active (tw);
++            return ;
++        }
++
+         if (config_getbool ("animation"))
+         {
+             for (i=15; i>=0; i--)
+diff -Nur src/tilda.c src.n/tilda.c
+--- src/tilda.c	2008-02-07 05:52:53.000000000 +0800
++++ src.n/tilda.c	2009-11-16 11:20:17.073756592 +0800
+@@ -50,6 +50,77 @@
+ #include <glib/gstdio.h>
+ 
+ 
++#include <sys/socket.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <unistd.h> 
++#include <fcntl.h>
++#include <sys/un.h>
++
++
++static const char remote_control_sock_filename[]="/tmp/tilda.socket";
++int create_socket(const char *name)
++{
++	int fd;
++	int r;
++	struct sockaddr_un uds_addr;
++
++	/* JIC */
++	unlink(name);
++
++	fd = socket(AF_UNIX, SOCK_STREAM, 0);
++	if (fd < 0) {
++		return fd;
++	}
++
++	/* setup address struct */
++	memset(&uds_addr, 0, sizeof(uds_addr));
++	uds_addr.sun_family = AF_UNIX;
++	strcpy(uds_addr.sun_path, name);
++
++	/* bind it to the socket */
++	r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
++	if (r < 0) {
++		return r;
++	}
++
++
++	/* listen - allow 10 to queue */
++	r = listen(fd, 10);
++	if (r < 0) {
++		return r;
++	}
++
++	return fd;
++}
++
++
++
++gboolean remote_control_fun(GIOChannel* source, GIOCondition condition, gpointer data)
++{
++	int client_fd = 0;
++	int listen_fd = g_io_channel_unix_get_fd(source);
++	int in = 0;
++	tilda_window*  tw = (tilda_window*)data;
++	tilda_term *tt;
++	gint pos;
++
++	struct sockaddr_un cliaddr;
++	socklen_t len = sizeof(struct sockaddr_un);
++	client_fd = accept(listen_fd, (struct sockaddr *)&cliaddr, &len);
++	read(client_fd, &in, sizeof(int));
++	
++    pos = gtk_notebook_get_current_page (GTK_NOTEBOOK (tw->notebook));
++	tt = find_tt_in_g_list (tw, pos);
++	if (in) 
++		vte_terminal_set_cursor_shape(tt->vte_term, VTE_CURSOR_SHAPE_IBEAM);
++	else
++		vte_terminal_set_cursor_shape(tt->vte_term, VTE_CURSOR_SHAPE_BLOCK);
++
++	close(client_fd);
++	return TRUE;
++}
++
+ static gchar *create_lock_file (gchar *home_directory, struct lock_info lock)
+ {
+     DEBUG_FUNCTION ("create_lock_file");
+@@ -319,6 +390,7 @@
+     GError *error = NULL;
+     GOptionContext *context = g_option_context_new (NULL);
+     g_option_context_add_main_entries (context, cl_opts, NULL);
++	GIOChannel* remote_control_sock;
+     g_option_context_add_group (context, gtk_get_option_group (TRUE));
+     g_option_context_parse (context, &argc, &argv, &error);
+     g_option_context_free (context);
+@@ -511,6 +583,8 @@
+     struct lock_info lock;
+     gboolean need_wizard = FALSE;
+     gchar *home_dir, *config_file, *lock_file;
++	int remote_control_sock;
++	GIOChannel* remote_control_channel;
+ 
+     home_dir = g_strdup (g_get_home_dir ());
+ 
+@@ -619,9 +693,24 @@
+         pull (tw, PULL_DOWN);
+     }
+ 
++
++	remote_control_sock = create_socket(remote_control_sock_filename);
++	if (remote_control_sock < 0) {
++		fprintf(stderr, "Can't open socket %s: %s\n", remote_control_sock_filename, strerror(errno));
++		return 0;
++	}
++
++	fcntl(remote_control_sock, F_SETFD, FD_CLOEXEC);
++	chmod(remote_control_sock_filename, 0666);
++	remote_control_channel = g_io_channel_unix_new(remote_control_sock);
++	g_io_add_watch(remote_control_channel, G_IO_IN, remote_control_fun, tw);
++
+     /* Whew! We're finally all set up and ready to run GTK ... */
+     gtk_main();
+ 
++	close(remote_control_sock);
++	g_io_channel_unref(remote_control_channel);
++
+     /* Ok, we're at the end of our run. Time to clean up ... */
+     tilda_window_free (tw);
+ 
+diff -Nur src/tilda_window.c src.n/tilda_window.c
+--- src/tilda_window.c	2008-01-18 06:07:39.000000000 +0800
++++ src.n/tilda_window.c	2009-11-16 11:01:32.711370170 +0800
+@@ -56,7 +56,7 @@
+ }
+ 
+ 
+-static tilda_term* find_tt_in_g_list (tilda_window *tw, gint pos)
++tilda_term* find_tt_in_g_list (tilda_window *tw, gint pos)
+ {
+     DEBUG_FUNCTION ("find_tt_in_g_list");
+     DEBUG_ASSERT (tw != NULL);
+@@ -114,6 +114,57 @@
+     return 0;
+ }
+ 
++static gint full_screen_window (tilda_window *tw)
++{
++	static gint s_w = 0;
++	static gint s_h = 0;
++	static gint s_is_full = FALSE;
++
++	gint w, h, sw, sh;
++	GdkScreen* screen;
++	screen = gdk_screen_get_default();
++	sw = gdk_screen_get_width(screen);
++	sh = gdk_screen_get_height(screen);
++	gtk_window_get_size(GTK_WINDOW(tw->window), &w, &h);
++
++	if (s_is_full) {
++		s_is_full = FALSE;
++		gtk_window_resize(GTK_WINDOW(tw->window), s_w, s_h);
++	} else {
++		s_is_full = TRUE;
++		s_w = w;
++		s_h = h;
++		gtk_window_resize (GTK_WINDOW(tw->window), sw, sh);
++	}
++	return TRUE;
++}
++
++static gint zoom_up_window (tilda_window *tw)
++{
++	gint w, h, sw, sh;
++	GdkScreen* screen;
++	screen = gdk_screen_get_default();
++	sw = gdk_screen_get_width(screen);
++	sh = gdk_screen_get_height(screen);
++	gtk_window_get_size(GTK_WINDOW(tw->window), &w, &h);
++	h += 10;
++	if ( h > sh)
++		h = sh;
++	gtk_window_resize (GTK_WINDOW(tw->window), w, h);
++	return TRUE;
++}
++
++static gint zoom_down_window (tilda_window *tw)
++{
++	gint w, h;
++	gtk_window_get_size(GTK_WINDOW(tw->window), &w, &h);
++	h -= 10;
++	if ( h < 20)
++		h = 20;
++	gtk_window_resize (GTK_WINDOW(tw->window), w, h);
++	return TRUE;
++}
++
+ static gint next_tab (tilda_window *tw)
+ {
+     DEBUG_FUNCTION ("next_tab");
+@@ -319,6 +370,18 @@
+     temp = g_cclosure_new_swap (G_CALLBACK(cpaste), tw, NULL);
+     gtk_accel_group_connect (accel_group, 'v', GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE, temp);
+ 
++    /* zoom up window */
++    temp = g_cclosure_new_swap (G_CALLBACK(zoom_down_window), tw, NULL);
++    gtk_accel_group_connect (accel_group, GDK_Up, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE, temp);
++
++    /* zoom down window */
++    temp = g_cclosure_new_swap (G_CALLBACK(zoom_up_window), tw, NULL);
++    gtk_accel_group_connect (accel_group, GDK_Down, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE, temp);
++
++    /* zoom down window */
++    temp = g_cclosure_new_swap (G_CALLBACK(full_screen_window), tw, NULL);
++    gtk_accel_group_connect (accel_group, GDK_F11, 0, GTK_ACCEL_VISIBLE, temp);
++
+     return 0;
+ }
+ 

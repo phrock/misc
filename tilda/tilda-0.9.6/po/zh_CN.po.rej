@@ -1,0 +1,148 @@
+--- po/zh_CN.po	2008-04-28 18:41:42.000000000 +0800
++++ po/zh_CN.po	2010-09-15 22:46:21.000000000 +0800
+@@ -7,10 +7,11 @@
+ msgstr ""
+ "Project-Id-Version: tilda\n"
+ "Report-Msgid-Bugs-To: sloutri@iit.edu\n"
+-"POT-Creation-Date: 2008-04-28 05:41-0500\n"
++"POT-Creation-Date: 2010-09-15 22:46+0800\n"
+ "PO-Revision-Date: 2008-03-17 23:34+0000\n"
+ "Last-Translator: luojie-dune <Unknown>\n"
+ "Language-Team: Chinese (China) <zh_CN@li.org>\n"
++"Language: \n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -33,7 +34,7 @@
+ msgid "Do not show in taskbar"
+ msgstr "不在任务栏显示"
+ 
+-#: tilda.glade:85 src/tilda.c:303
++#: tilda.glade:85 src/tilda.c:374
+ msgid "Start Tilda hidden"
+ msgstr "Tilda 启动后隐藏"
+ 
+@@ -183,11 +184,11 @@
+ msgid "Centered Vertically"
+ msgstr "垂直居中"
+ 
+-#: tilda.glade:869 src/tilda.c:310
++#: tilda.glade:869 src/tilda.c:381
+ msgid "X Position"
+ msgstr "X轴位置"
+ 
+-#: tilda.glade:882 src/tilda.c:311
++#: tilda.glade:882 src/tilda.c:382
+ msgid "Y Position"
+ msgstr "Y轴位置"
+ 
+@@ -390,61 +391,61 @@
+ msgid "Unable to write the config file to %s\n"
+ msgstr "无法将配置文件写入%s\n"
+ 
+-#: src/tilda.c:214
++#: src/tilda.c:285
+ #, c-format
+ msgid "Unable to run command: `%s'\n"
+ msgstr "无法执行命令：`%s'\n"
+ 
+-#: src/tilda.c:237 src/tilda.c:463
++#: src/tilda.c:308 src/tilda.c:535
+ #, c-format
+ msgid "Unable to open lock directory: %s\n"
+ msgstr "无法打开锁定的目录：%s\n"
+ 
+-#: src/tilda.c:300
++#: src/tilda.c:371
+ msgid "Use Antialiased Fonts"
+ msgstr "使用平滑字体"
+ 
+-#: src/tilda.c:301
++#: src/tilda.c:372
+ msgid "Set the background color"
+ msgstr "设置背景颜色"
+ 
+-#: src/tilda.c:302
++#: src/tilda.c:373
+ msgid "Run a command at startup"
+ msgstr "启动时运行命令"
+ 
+-#: src/tilda.c:304
++#: src/tilda.c:375
+ msgid "Set the font to the following string"
+ msgstr "使用如下字符串的字体"
+ 
+-#: src/tilda.c:305
++#: src/tilda.c:376
+ msgid "Scrollback Lines"
+ msgstr "回滚行"
+ 
+-#: src/tilda.c:306
++#: src/tilda.c:377
+ msgid "Use Scrollbar"
+ msgstr "使用滚动条"
+ 
+-#: src/tilda.c:307
++#: src/tilda.c:378
+ msgid "Opaqueness: 0-100%"
+ msgstr "不透明: 0-100%"
+ 
+-#: src/tilda.c:308
++#: src/tilda.c:379
+ msgid "Print the version, then exit"
+ msgstr "显示版本号后退出"
+ 
+-#: src/tilda.c:309
++#: src/tilda.c:380
+ msgid "Set Initial Working Directory"
+ msgstr "设定初始工作目录"
+ 
+-#: src/tilda.c:312
++#: src/tilda.c:383
+ msgid "Set Background Image"
+ msgstr "设置背景图片"
+ 
+-#: src/tilda.c:313
++#: src/tilda.c:384
+ msgid "Show Configuration Wizard"
+ msgstr "显示配置向导"
+ 
+-#: src/tilda.c:329
++#: src/tilda.c:401
+ #, c-format
+ msgid ""
+ "Error parsing command-line options. Try \"tilda --help\"\n"
+@@ -476,15 +477,15 @@
+ msgid "Unable to launch default shell: %s\n"
+ msgstr "无法运行默认shell：%s\n"
+ 
+-#: src/tilda_terminal.c:675
++#: src/tilda_terminal.c:700
+ msgid "_New Tab"
+ msgstr "新建标签(_N)"
+ 
+-#: src/tilda_terminal.c:679
++#: src/tilda_terminal.c:704
+ msgid "_Close Tab"
+ msgstr "关闭标签(_C)"
+ 
+-#: src/tilda_terminal.c:769
++#: src/tilda_terminal.c:794
+ #, c-format
+ msgid "Failed to launch the web browser. The command was `%s'\n"
+ msgstr "无法运行web浏览器。该命令是'%s'\n"
+@@ -493,12 +494,12 @@
+ msgid "You have a bad tab_pos in your configuration file\n"
+ msgstr "在你的配置文件中有一个错误的标签位置\n"
+ 
+-#: src/tilda_window.c:333
++#: src/tilda_window.c:396
+ #, c-format
+ msgid "Unable to set tilda's icon: %s\n"
+ msgstr "无法设置tilda的图标: %s\n"
+ 
+-#: src/tilda_window.c:480
++#: src/tilda_window.c:543
+ msgid "Out of memory, cannot create tab\n"
+ msgstr "内存不够，无法创建标签页\n"
+ 
