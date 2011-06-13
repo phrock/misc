@@ -39,16 +39,16 @@
 (setq-default indent-tabs-mode nil)
 
 ;; for kernel code
-(defun linux-c-mode ()
-  "C mode with adjusted defaults for use with the Linux kernel."
-  (interactive)
-  (c-mode)
-  (c-set-style "K&R")
-  (setq tab-width 8)
-  (setq indent-tabs-mode t)
-  (setq c-basic-offset 8))
-(setq auto-mode-alist (cons '("/home/rock/program/kernel/.*\\.[ch]$" . linux-c-mode)
-			    auto-mode-alist))
+;; (defun linux-c-mode ()
+;;   "C mode with adjusted defaults for use with the Linux kernel."
+;;   (interactive)
+;;   (c-mode)
+;;   (c-set-style "K&R")
+;;   (setq tab-width 8)
+;;   (setq indent-tabs-mode t)
+;;   (setq c-basic-offset 8))
+;; (setq auto-mode-alist (cons '("/home/Aphrodite/program/kernel/.*\\.[ch]$" . linux-c-mode)
+;; 			    auto-mode-alist))
 ;; (setq auto-mode-alist (cons '("/home/rock/test/.*\\.[ch]$" . linux-c-mode)
 ;; 			    auto-mode-alist))
 
@@ -70,20 +70,21 @@
 ;;(eval-after-load "pymacs"
 ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
 
-
-
 (tool-bar-mode)
 (menu-bar-mode)
 (scroll-bar-mode)
 
-(blink-cursor-mode ) ;; cursor do not flash
+(blink-cursor-mode) ;; cursor do not flash
 (setq ring-bell-function 'ignore) ;; close the bell
 
 (set-background-color "DarkSlateGray")
 (set-foreground-color "gray")
 
 (set-cursor-color "orchid")
-(set-default-font "DejaVu Sans Mono-13")
+(set-default-font "DejaVu Sans Mono-10")
+;; (set-default-font "Monaco-10")
+;;(set-default-font "Inconsolata-12")
+;;(set-default-font "Monofur-12")
 
 (setq display-time-24hr-format t)
 ;(display-time-mode 1) ;; show time
@@ -109,7 +110,7 @@
 	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (require 'yasnippet)
 (yas/initialize)
-(setq yas/root-directory "~/.emacs.d/rock_snippets")
+(setq yas/root-directory "~/.emacs.d/Aphrodite_snippets")
 (yas/load-directory yas/root-directory)
 (setq yas/triggers-in-field t)
 
@@ -217,6 +218,22 @@ File suffix is used to determine what program to run."
 ;; (emms-standard)
 ;; (emms-default-players)
 
+;;############### Session.el ###############
+;; (require 'session)
+;; (add-hook 'after-init-hook 'session-initialize)
+;;############### Desktop Reload ###############
+(load "desktop")
+(add-to-list 'desktop-modes-not-to-save 'dired-mode)
+(add-to-list 'desktop-modes-not-to-save 'Info-mode)
+(add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
+(add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
+;; use only one desktop
+(setq desktop-path '("~/.emacs.d/"))
+(setq desktop-dirname "~/.emacs.d/")
+(setq desktop-base-file-name "emacs-desktop")
+(desktop-save-mode t)
+
+;; w3m config
 (add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
 (require 'w3m-load)
-(setq w3m-home-page "file:///home/rock/Documents/c++_primer4/html/0201721481/toc.html")
+(setq w3m-home-page "file:///home/Aphrodite/Documents/c++_primer4/html/0201721481/toc.html")
