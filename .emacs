@@ -1,5 +1,5 @@
 (setq frame-title-format "FIGHTING")
-;(mouse-avoidance-mode 'banish)
+;; (mouse-avoidance-mode 'banish)
 
 (global-set-key "\C-x?" 'help-command)
 (global-set-key "\C-h" 'backward-delete-char)
@@ -23,9 +23,9 @@
 (global-set-key "\M-p" '( lambda() (interactive) (move-to-window-line 0) ) )
 (global-set-key "\M-n" '( lambda() (interactive) (move-to-window-line -1) ) )
 
-;(setq scroll-conservatively 0) ;;when beyond the last line of the window, do NOT scroll half window lines.
-;(show-paren-mode t)
-;(setq show-paren-style 'parentheses) ;; 设置显示括号匹配，但不跳转
+;; (setq scroll-conservatively 0) ;;when beyond the last line of the window, do NOT scroll half window lines.
+;; (show-paren-mode t)
+;; (setq show-paren-style 'parentheses) ;; 设置显示括号匹配，但不跳转
 (setq column-number-mode t)
 (setq inhibit-startup-message t) ;;close startup message
 (setq transient-mark-mode t) ;;highlight selected region
@@ -87,23 +87,23 @@
 ;;(set-default-font "Monofur-12")
 
 (setq display-time-24hr-format t)
-;(display-time-mode 1) ;; show time
+;; (display-time-mode 1) ;; show time
 
-;(set-frame-width (selected-frame) 200)
-;(set-frame-height (selected-frame) 100)
+;; (set-frame-width (selected-frame) 200)
+;; (set-frame-height (selected-frame) 100)
 (put 'upcase-region 'disabled nil)
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(font-lock-comment-face ((((class color) (min-colors 88) (background dark)) (:foreground "dim grey")))))
 
 (add-to-list 'load-path
@@ -136,12 +136,12 @@ The file can be php, perl, python, ruby, javascript, bash, ocaml, java.
 File suffix is used to determine what program to run."
   (interactive)
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
-    (setq extention-alist ; a keyed list of file suffix to comand-line program to run
+    (setq extention-alist ;; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -Wall -o /tmp/a.out")
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
-            ;("sh" . "bash")
+            ;; ("sh" . "bash")
             )
           )
     (setq fileStr-alist
@@ -165,12 +165,12 @@ File suffix is used to determine what program to run."
 (defun compile-and-run-current-file-debug ()
   (interactive)
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
-    (setq extention-alist ; a keyed list of file suffix to comand-line program to run
+    (setq extention-alist ;; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -DDEBUG -Wall -o /tmp/a.out")
 	    ("c"   . "gcc -DDEBUG -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
-            ;("sh" . "bash")
+            ;; ("sh" . "bash")
             )
           )
     (setq fileStr-alist
@@ -212,7 +212,7 @@ File suffix is used to determine what program to run."
 ;; (setenv "PATH" (concat "/home/rock/bin" ":" (getenv "PATH")))
 ;; (eshell)
 
-; emms
+                                        ; emms
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/emms-3.0/")
 ;; (require 'emms-setup)
 ;; (emms-standard)
@@ -254,8 +254,8 @@ File suffix is used to determine what program to run."
     (set-buffer (get-buffer-create "*sdcv*"))
     (buffer-disable-undo)
     (erase-buffer)
-                                        ; 在没有创建 *sdcv* windows 之前检查是否有分屏(是否为一个window)
-                                        ; 缺憾就是不能自动开出一个小屏幕，自己注销
+    ;; 在没有创建 *sdcv* windows 之前检查是否有分屏(是否为一个window)
+    ;; 缺憾就是不能自动开出一个小屏幕，自己注销
     (if (null (cdr (window-list)))
         (setq onewindow t)
       (setq onewindow nil))
@@ -274,9 +274,9 @@ File suffix is used to determine what program to run."
              ;; (local-set-key (kbd "k") 'previous-line)
              ;; (local-set-key (kbd "SPC") 'scroll-up)
              ;; (local-set-key (kbd "DEL") 'scroll-down)
-             (local-set-key (kbd "q") (lambda ()
-                                        (interactive)
-                                        (if (eq onewindow t)
-                                            (delete-window)
-                                          (progn (bury-buffer) (other-window 1))))))
+             (local-set-key (kbd "C-g") (lambda ()
+                                          (interactive)
+                                          (if (eq onewindow t)
+                                              (delete-window)
+                                            (progn (bury-buffer) (other-window 1))))))
            (goto-char (point-min))))))))
