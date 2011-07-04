@@ -1,0 +1,6 @@
+javaws ~/program/acm/topcoder/ContestAppletProd.jnlp
+
+netx: Unexpected net.sourceforge.jnlp.ParseException: Invalid XML document syntax. at net.sourceforge.jnlp.Parser.getRootNode(Parser.java:1203
+
+
+rm -rf .netx/ .netxrc
