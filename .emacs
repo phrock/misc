@@ -8,8 +8,10 @@
 (global-set-key [C-left] 'previous-buffer)
 (global-set-key [C-right] 'next-buffer)
 ;; (global-set-key [C-tab] 'other-window)
-(global-set-key [M-f1] 'next-buffer)
-(global-set-key [M-f2] 'previous-buffer)
+;; (global-set-key [M-f1] 'next-buffer)
+;; (global-set-key [M-f2] 'previous-buffer)
+;; (global-set-key "\C-[" 'previous-buffer)
+;; (global-set-key "\C-]" 'next-buffer)
 (global-set-key (kbd "C-;") 'other-window)
 (global-set-key (kbd "C-'") 'switch-to-buffer)
 ;; (global-set-key (kbd "C-,") '( lambda() (interactive) (backward-delete-char 4))) ; for python indent back
@@ -87,24 +89,25 @@
 ;;(set-default-font "Monofur-12")
 
 (setq display-time-24hr-format t)
-;; (display-time-mode 1) ;; show time
+(display-time-mode 1) ;; show time
 
 ;; (set-frame-width (selected-frame) 200)
 ;; (set-frame-height (selected-frame) 100)
 (put 'upcase-region 'disabled nil)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  )
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(font-lock-comment-face ((((class color) (min-colors 88) (background dark)) (:foreground "dim grey")))))
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(font-lock-comment-face ((((class color) (min-colors 88) (background dark)) (:foreground "dim grey"))))
+ '(font-lock-keyword-face ((((class color) (min-colors 88) (background dark)) (:foreground "cyan3")))))
 
 (add-to-list 'load-path
 	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
@@ -113,6 +116,26 @@
 (setq yas/root-directory "~/.emacs.d/Aphrodite_snippets")
 (yas/load-directory yas/root-directory)
 (setq yas/triggers-in-field t)
+
+;; lisp
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(add-to-list 'load-path "~/.emacs.d/plugins/slime")
+(require 'slime-autoloads)
+(slime-setup '(slime-fancy))
+;; (require 'slime)
+;; (slime-setup)
+(setq common-lisp-hyperspec-root "/home/Aphrodite/Documents/LISP/HyperSpec/")
+(setq browse-url-browser-function
+      '(("/home/Aphrodite/Documents/LISP/HyperSpec/" . w3m-browse-url)
+        ("." . browse-url-default-browser)))
+
+;; haskell
+;; (add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
+;; (load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 ;; for cscope
 (add-to-list 'load-path
@@ -141,6 +164,7 @@ File suffix is used to determine what program to run."
 	    ("cpp" . "g++ -Wall -o /tmp/a.out")
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
+            ("hs"  . "ghc -o /tmp/a.out -outputdir /tmp -tmpdir /tmp")
             ;; ("sh" . "bash")
             )
           )
@@ -149,6 +173,7 @@ File suffix is used to determine what program to run."
 	    ("cpp" . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    ("py"  . "")
+            ("hs"  . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    )
 	  )
     (setq fname (buffer-file-name))
@@ -207,12 +232,13 @@ File suffix is used to determine what program to run."
 (split-window-horizontally)
 ;; (enlarge-window-horizontally 20)
 
+;; (ansi-term "/home/Aphrodite/bin/tmux.sh")
 ;; (ansi-term "/bin/bash")
 ;; (setq eshell-aliases-file "~/.emacs.d/eshell-conf/alias")
 ;; (setenv "PATH" (concat "/home/rock/bin" ":" (getenv "PATH")))
 ;; (eshell)
 
-                                        ; emms
+;; emms
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/emms-3.0/")
 ;; (require 'emms-setup)
 ;; (emms-standard)
@@ -222,16 +248,16 @@ File suffix is used to determine what program to run."
 ;; (require 'session)
 ;; (add-hook 'after-init-hook 'session-initialize)
 ;;############### Desktop Reload ###############
-(load "desktop")
-(add-to-list 'desktop-modes-not-to-save 'dired-mode)
-(add-to-list 'desktop-modes-not-to-save 'Info-mode)
-(add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-(add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-;; use only one desktop
-(setq desktop-path '("~/.emacs.d/"))
-(setq desktop-dirname "~/.emacs.d/")
-(setq desktop-base-file-name "emacs-desktop")
-(desktop-save-mode t)
+;; (load "desktop")
+;; (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+;; (add-to-list 'desktop-modes-not-to-save 'Info-mode)
+;; (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
+;; (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
+;; ;; use only one desktop
+;; (setq desktop-path '("~/.emacs.d/"))
+;; (setq desktop-dirname "~/.emacs.d/")
+;; (setq desktop-base-file-name "emacs-desktop")
+;; (desktop-save-mode t)
 
 ;; w3m config
 (add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
