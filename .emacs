@@ -128,6 +128,20 @@
 (setq browse-url-browser-function
       '(("/home/Aphrodite/Documents/LISP/HyperSpec/" . w3m-browse-url)
         ("." . browse-url-default-browser)))
+(defun lisp-indent-or-complete (&optional arg)
+  (interactive "p")
+  (if (or (looking-back "^\\s-*") (bolp))
+      (call-interactively 'lisp-indent-line)
+    (progn
+      (call-interactively 'slime-indent-and-complete-symbol))))
+      ;; (local-set-key (kbd "C-g") (lambda ()
+      ;;                              (interactive)
+      ;;                              (switch-to-buffer-other-window "*Completions**")
+      ;;                              (bury-buffer)
+      ;;                              (other-window 1))))))
+(eval-after-load "lisp-mode"
+  '(progn
+     (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
 
 ;; haskell
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
@@ -165,6 +179,7 @@ File suffix is used to determine what program to run."
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
 	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
             ("hs"  . "ghc -o /tmp/a.out -outputdir /tmp -tmpdir /tmp")
+            ("lisp" . "/usr/bin/time -f \"***** Time %Us *****\" sbcl --script")
             ;; ("sh" . "bash")
             )
           )
@@ -174,6 +189,7 @@ File suffix is used to determine what program to run."
 	    ("c"   . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
 	    ("py"  . "")
             ("hs"  . " && /usr/bin/time -f \"***** Time %Us *****\" /tmp/a.out")
+            ("lisp" . "")
 	    )
 	  )
     (setq fname (buffer-file-name))
@@ -186,7 +202,7 @@ File suffix is used to determine what program to run."
 	  (message "Running...")
 	  (async-shell-command cmdStr))
       (message "No recognized program file suffix for this file.")
-      ) ))
+      )))
 (defun compile-and-run-current-file-debug ()
   (interactive)
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
@@ -215,7 +231,7 @@ File suffix is used to determine what program to run."
 	  (message "Running...")
 	  (async-shell-command cmdStr))
       (message "No recognized program file suffix for this file.")
-      ) ))
+      )))
 (global-set-key "\M-r" 'compile-and-run-current-file)
 (global-set-key "\C-\M-r" 'compile-and-run-current-file-debug)
 
