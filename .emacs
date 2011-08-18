@@ -176,8 +176,9 @@ File suffix is used to determine what program to run."
     (setq extention-alist ;; a keyed list of file suffix to comand-line program to run
           '(
 	    ("cpp" . "g++ -Wall -o /tmp/a.out")
+            ;; ("cpp" . "g++ -Wall -o /tmp/a.out -lglut -lGL -lGLU -lm -I /home/Aphrodite/program/openGL/src/examples/src/shared -I /usr/include/GL")
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
-	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
+	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python")
             ("hs"  . "ghc -o /tmp/a.out -outputdir /tmp -tmpdir /tmp")
             ("lisp" . "/usr/bin/time -f \"***** Time %Us *****\" sbcl --script")
             ;; ("sh" . "bash")
@@ -210,7 +211,7 @@ File suffix is used to determine what program to run."
           '(
 	    ("cpp" . "g++ -DDEBUG -Wall -o /tmp/a.out")
 	    ("c"   . "gcc -DDEBUG -Wall -o /tmp/a.out")
-	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python3")
+	    ("py"  . "/usr/bin/time -f \"***** Time %Us *****\" python")
             ;; ("sh" . "bash")
             )
           )
@@ -286,7 +287,7 @@ File suffix is used to determine what program to run."
 
 ;; sdcv
 (global-set-key (kbd "C-c d") 'kid-sdcv-to-buffer)
-(defun kid-sdcv-to-buffer ()
+(defun kid-sdcv-to-buffer()
   (interactive)
   (let ((word (if mark-active
                   (buffer-substring-no-properties (region-beginning) (region-end))
@@ -322,3 +323,13 @@ File suffix is used to determine what program to run."
                                               (delete-window)
                                             (progn (bury-buffer) (other-window 1))))))
            (goto-char (point-min))))))))
+
+(global-set-key (kbd "C-M-;") 'comment-and-copy)
+(defun comment-and-copy()
+  (interactive)
+  (if mark-active
+      (let ((lines (buffer-substring-no-properties (region-beginning) (region-end)))
+            (lines-size (- (region-end) (region-beginning))))
+        (comment-region (region-beginning) (region-end))
+        (insert lines)
+        (backward-char lines-size))))
