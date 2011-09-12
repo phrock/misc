@@ -1,8 +1,15 @@
-! orig: 48: apostrophe('), quotedbl(") 49: grave(`), asciitilde(~) 105: Control_R
+!! orig: 48: apostrophe('), quotedbl(") 49: grave(`), asciitilde(~) 105: Control_R
+!remove Control = Control_R
+!keycode 48 = Control_R
+!keycode 49 = apostrophe quotedbl
+!keycode 105 = grave asciitilde
+!add Control = Control_R
+
+! orig: 48: apostrophe('), quotedbl(") 23: Tab, asciitilde(~) 105: Control_R
 remove Control = Control_R
 keycode 48 = Control_R
-keycode 49 = apostrophe quotedbl
-keycode 105 = grave asciitilde
+keycode 23 = apostrophe quotedbl
+keycode 105 = Tab
 add Control = Control_R
 
 ! orig: 37: Control_L 66: Caps_Lock
