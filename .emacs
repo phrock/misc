@@ -150,7 +150,10 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-(global-set-key "\C-j" 'comint-send-input)
+(add-hook 'inferior-haskell-mode-hook
+	  (lambda () (define-key inferior-haskell-mode-map "\C-j"
+                       'comint-send-input)))
+
 
 ;; for cscope
 (add-to-list 'load-path
