@@ -144,12 +144,13 @@
      (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
 
 ;; haskell
-;; (add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
-;; (load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
+(load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(global-set-key "\C-j" 'comint-send-input)
 
 ;; for cscope
 (add-to-list 'load-path
@@ -279,7 +280,7 @@ File suffix is used to determine what program to run."
 ;; w3m config
 (add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
 (require 'w3m-load)
-(setq w3m-home-page "file:///home/Aphrodite/Documents/c++_primer4/html/0201721481/toc.html")
+;; (setq w3m-home-page "file:///home/Aphrodite/Documents/c++_primer4/html/0201721481/toc.html")
 
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/sdcv")
 ;; (require 'showtip)
