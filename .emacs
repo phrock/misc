@@ -16,11 +16,19 @@
 (global-set-key (kbd "C-'") 'switch-to-buffer)
 ;; (global-set-key (kbd "C-,") '( lambda() (interactive) (backward-delete-char 4))) ; for python indent back
 
+(c-set-offset 'substatement-open 0)
 
-(add-hook 'c-mode-hook 
-	  (lambda () (define-key c-mode-map "\C-\M-h" 'backward-kill-word)))
-(add-hook 'c++-mode-hook 
-	  (lambda () (define-key c++-mode-map "\C-\M-h" 'backward-kill-word)))
+(add-hook 'c-mode-hook
+	  (lambda ()
+            ;; (setq c-default-style "linux")
+            (define-key c-mode-map "\C-\M-h" 'backward-kill-word)))
+(add-hook 'c++-mode-hook
+	  (lambda () 
+            ;; (setq c-default-style "linux")
+            (define-key c++-mode-map "\C-\M-h" 'backward-kill-word)))
+(add-hook 'java-mode-hook
+	  (lambda ()
+            (define-key java-mode-map "\C-\M-h" 'backward-kill-word)))
 
 (global-set-key "\M-p" '( lambda() (interactive) (move-to-window-line 0) ) )
 (global-set-key "\M-n" '( lambda() (interactive) (move-to-window-line -1) ) )
