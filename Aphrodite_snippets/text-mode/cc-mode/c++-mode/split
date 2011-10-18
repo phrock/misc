@@ -8,8 +8,6 @@ template<class T> vector<T> split(const string& s, const string& delim = " ") {
         else t += s[i];
     if (!t.empty()) aux.push_back(t);
     vector<T> res;
-    if (typeid(aux).name() == typeid(res).name())
-       return aux;
     for (int i = 0; i < (int)(aux).size(); ++i)
         res.push_back(*({stringstream ss; ss << (aux[i]); static T _; ss >> _; &_;}));
     return res;
