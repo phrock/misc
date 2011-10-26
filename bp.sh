@@ -1,3 +1,5 @@
+svn up
+
 RPMBUILD="${HOME}/rpmbuild"
 SPECFILE=`ls *.spec`
 

@@ -161,6 +161,9 @@
 (add-hook 'inferior-haskell-mode-hook
 	  (lambda () (define-key inferior-haskell-mode-map "\C-j"
                        'comint-send-input)))
+(add-hook 'haskell-mode-hook
+          (lambda () (define-key haskell-mode-map "\C-c\C-g"
+                       'haskell-indent-insert-guard)))
 
 
 ;; for cscope
