@@ -273,9 +273,9 @@ File suffix is used to determine what program to run."
 
 ;; (ansi-term "/Users/Aphrodite/bin/tmux.sh")
 ;; (ansi-term "/bin/bash")
-(setq eshell-aliases-file "~/.emacs.d/eshell-conf/alias")
-(setenv "PATH" (concat "/Users/Aphrodite/bin" ":" (getenv "PATH")))
-(eshell)
+;; (setq eshell-aliases-file "~/.emacs.d/eshell-conf/alias")
+;; (setenv "PATH" (concat "/Users/Aphrodite/bin" ":" (getenv "PATH")))
+;; (eshell)
 
 ;; emms
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/emms-3.0/")
@@ -300,9 +300,10 @@ File suffix is used to determine what program to run."
 
 ;; w3m config
 ;; (setq exec-path (cons "/usr/local/bin" exec-path))
-;; (add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
-;; (require 'w3m-load)
-;; (setq w3m-home-page "file:///Users/Aphrodite/program/acm/topcoder/sources/a.html")
+(setq w3m-command "/opt/local/bin/w3m")
+(add-to-list 'load-path "~/.emacs.d/plugins/w3m/")
+(require 'w3m-load)
+(setq w3m-home-page "file:///Users/Aphrodite/program/acm/topcoder/sources/a.html")
 ;; (setq w3m-home-page "http://learnyouahaskell.com/chapters")
 
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/sdcv")
@@ -358,5 +359,5 @@ File suffix is used to determine what program to run."
         (insert lines)
         (backward-char lines-size))))
 
-(ns-toggle-fullscreen)
 (setq read-file-name-completion-ignore-case nil)
+(run-with-idle-timer 0.5 nil 'ns-toggle-fullscreen)
