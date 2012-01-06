@@ -23,14 +23,17 @@
 
 (add-hook 'c-mode-hook
 	  (lambda ()
+            (setq c-basic-offset 4)
             ;; (setq c-default-style "linux")
             (define-key c-mode-map "\C-\M-h" 'backward-kill-word)))
 (add-hook 'c++-mode-hook
 	  (lambda () 
+            (setq c-basic-offset 4)
             ;; (setq c-default-style "linux")
             (define-key c++-mode-map "\C-\M-h" 'backward-kill-word)))
 (add-hook 'java-mode-hook
 	  (lambda ()
+            (setq c-basic-offset 2)
             (define-key java-mode-map "\C-\M-h" 'backward-kill-word)))
 
 (global-set-key "\M-p" '( lambda() (interactive) (move-to-window-line 0) ) )
@@ -47,7 +50,6 @@
 (setq auto-save-default         nil) ; Don't want any auto saving
 (setq backup-directory-alist '(("." . "~/.emacs.backups"))) ;; the backup files named xxx~ will in the directory: ~/.emacs.backups
 
-(setq c-basic-offset 4)
 ;; (setq indent-tabs-mode nil)无效的原因是indent-tabs-mode是针对buffer的local变量,每当建立buffer时会自动取缺省值.
 (setq-default indent-tabs-mode nil)
 
@@ -195,8 +197,12 @@ The file can be php, perl, python, ruby, javascript, bash, ocaml, java.
 File suffix is used to determine what program to run."
   (interactive)
   (let (extention-alist fileStr-alist fname suffix progName cmdStr)
+    (setq fname (buffer-file-name))
+    (setq basename (file-name-sans-extension (file-name-nondirectory fname)))
+    (setq suffix (file-name-extension fname))
     (setq extention-alist ;; a keyed list of file suffix to comand-line program to run
           '(
+            ("java" . "javac -d /tmp")
 	    ("cpp" . "g++ -Wall -o /tmp/a.out")
             ;; ("cpp" . "g++ -Wall -o /tmp/a.out -lglut -lGL -lGLU -lm -I /Users/Aphrodite/program/openGL/src/examples/src/shared -I /usr/include/GL")
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
@@ -207,7 +213,9 @@ File suffix is used to determine what program to run."
             )
           )
     (setq fileStr-alist
-	  '(
+	  `(
+            ("java" . ,(concat " && /usr/bin/time java -classpath /tmp " basename))
+            ;; ("java" . ,fname)
 	    ("cpp" . " && /usr/bin/time /tmp/a.out")
 	    ("c"   . " && /usr/bin/time /tmp/a.out")
 	    ("py"  . "")
@@ -215,8 +223,6 @@ File suffix is used to determine what program to run."
             ("lisp" . "")
 	    )
 	  )
-    (setq fname (buffer-file-name))
-    (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
     (setq fileStr (cdr (assoc suffix fileStr-alist)))
     (setq cmdStr (concat progName " \""   fname "\"" fileStr))
@@ -330,7 +336,7 @@ File suffix is used to determine what program to run."
     (if (null (cdr (window-list)))
         (setq onewindow t)
       (setq onewindow nil))
-    (let ((process (start-process-shell-command "sdcv" "*sdcv*" sdcv-command "-n --utf8-output" word)))
+    (let ((process (start-process-shell-command "sdcv" "*sdcv*" sdcv-command "-n --utf8-output --utf8-input" word)))
       (set-process-sentinel
        process
        (lambda (process signal)
