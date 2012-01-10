@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<root>
+  <list>
+    <item>
+      <name>Aphrodite is happy</name>
+      <identifier>private.Aphrodite_is_happy</identifier>
+      <autogen>--KeyToKey-- KeyCode::QUOTE, KeyCode::CONTROL_R</autogen>
+      <autogen>--KeyToKey-- KeyCode::TAB, KeyCode::QUOTE</autogen>
+      <autogen>--KeyToKey-- KeyCode::COMMAND_R, KeyCode::TAB</autogen>
+    </item>
+  </list>
+</root>
