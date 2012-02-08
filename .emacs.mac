@@ -21,19 +21,48 @@
 
 (c-set-offset 'substatement-open 0)
 
+;; (add-to-list 'load-path "/Users/Aphrodite/.emacs.d/plugins/autopair")
+;; (require 'autopair)
+;; (autopair-global-mode)
+
+(defun my-common-mode-auto-pair ()
+  (interactive)
+  (make-local-variable 'skeleton-pair-alist)
+  (setq skeleton-pair-alist '(
+                              ;; (? ? _ "''")
+                              ;; (? ? _ """")
+                              ;; (? ? _ "()")
+                              ;; (? ? _ "[]")
+                              (?{ \n > _ \n ?} >)))
+  (setq skeleton-pair t)
+  ;; (local-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+  ;; (local-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+  ;; (local-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
+  ;; (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+  (local-set-key (kbd "{") 'skeleton-pair-insert-maybe))
+
 (add-hook 'c-mode-hook
 	  (lambda ()
             (setq c-basic-offset 4)
+            (my-common-mode-auto-pair)
+            (c-toggle-auto-hungry-state 1)
             ;; (setq c-default-style "linux")
+            (define-key c-mode-map "\C-h" 'c-electric-backspace)
             (define-key c-mode-map "\C-\M-h" 'backward-kill-word)))
 (add-hook 'c++-mode-hook
 	  (lambda () 
             (setq c-basic-offset 4)
+            (my-common-mode-auto-pair)
+            (c-toggle-auto-hungry-state 1)
             ;; (setq c-default-style "linux")
+            (define-key c++-mode-map "\C-h" 'c-electric-backspace)
             (define-key c++-mode-map "\C-\M-h" 'backward-kill-word)))
 (add-hook 'java-mode-hook
 	  (lambda ()
             (setq c-basic-offset 2)
+            (my-common-mode-auto-pair)
+            (c-toggle-auto-hungry-state 1)
+            (define-key java-mode-map "\C-h" 'c-electric-backspace)
             (define-key java-mode-map "\C-\M-h" 'backward-kill-word)))
 
 (global-set-key "\M-p" '( lambda() (interactive) (move-to-window-line 0) ) )
@@ -89,7 +118,7 @@
 (setq menu-bar-mode nil)
 (setq scroll-bar-mode nil)
 (tool-bar-mode -1)
-(menu-bar-mode -1)
+;; (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 (blink-cursor-mode) ;; cursor do not flash
@@ -117,7 +146,12 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(jde-complete-function (quote jde-complete-minibuf))
+ '(jde-debugger (quote ("jdb")))
+ '(jde-gen-println (quote ("\"System.out.println(\" ~ \");\"")))
+ '(jde-jdk-doc-url "/Users/Aphrodite/Documents/jdk-6u30-apidocs/docs/api/index.html")
+ '(jde-jdk-registry (quote (("1.6.0_26" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6"))))
+ '(jde-resolve-relative-paths-p t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -203,6 +237,7 @@ File suffix is used to determine what program to run."
     (setq extention-alist ;; a keyed list of file suffix to comand-line program to run
           '(
             ("java" . "javac -d /tmp")
+            ;; ("java" . "javac -d /tmp -classpath /Users/Aphrodite/Documents/thinkInJava/src")
 	    ("cpp" . "g++ -Wall -o /tmp/a.out")
             ;; ("cpp" . "g++ -Wall -o /tmp/a.out -lglut -lGL -lGLU -lm -I /Users/Aphrodite/program/openGL/src/examples/src/shared -I /usr/include/GL")
 	    ("c"   . "gcc -Wall -o /tmp/a.out")
@@ -215,6 +250,7 @@ File suffix is used to determine what program to run."
     (setq fileStr-alist
 	  `(
             ("java" . ,(concat " && /usr/bin/time java -classpath /tmp " basename))
+            ;; ("java" . ,(concat " && /usr/bin/time java -classpath /Users/Aphrodite/Documents/thinkInJava/src -classpath /tmp " basename))
             ;; ("java" . ,fname)
 	    ("cpp" . " && /usr/bin/time /tmp/a.out")
 	    ("c"   . " && /usr/bin/time /tmp/a.out")
@@ -314,6 +350,22 @@ File suffix is used to determine what program to run."
 (setq w3m-home-page "file:///Users/Aphrodite/program/acm/topcoder/sources/a.html")
 ;; (setq w3m-home-page "http://learnyouahaskell.com/chapters")
 
+;; ;; jdee start
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/jdee-2.4.0.1/lisp"))
+;; (load-file "~/.emacs.d/plugins/cedet-1.0/common/cedet.el")
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/elib-1.0"))
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/ecb-2.40"))
+;; ;;(add-to-list 'load-path (expand-file-name "/opt/emacs_plugins/jde-jalopy"))
+
+;; (load-file (expand-file-name "~/.emacs.d/plugins/ecb-2.40/ecb.el"))
+
+;; ;; (require 'font-lock)
+;; ;; (require 'ecb)
+;; ;; (require 'ecb-autoloads)
+;; (require 'jde)
+
+;; ;; jdee end
+
 ;; (add-to-list 'load-path "~/.emacs.d/plugins/sdcv")
 ;; (require 'showtip)
 ;; (require 'sdcv)
@@ -367,6 +419,12 @@ File suffix is used to determine what program to run."
         (comment-region (region-beginning) (region-end))
         (insert lines)
         (backward-char lines-size))))
+
+(global-set-key (kbd "C-M-k") 'kill-whole-line-and-move-end-of-line)
+(defun kill-whole-line-and-move-end-of-line()
+  (interactive)
+    (kill-whole-line)
+    (move-end-of-line nil))
 
 (setq read-file-name-completion-ignore-case nil)
 (run-with-idle-timer 0.5 nil 'ns-toggle-fullscreen)
